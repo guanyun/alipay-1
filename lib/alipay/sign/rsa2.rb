@@ -11,7 +11,9 @@ module Alipay
 
       def self.verify?(key, string, sign)
         rsa = OpenSSL::PKey::RSA.new(key)
-        rsa.verify('sha256', Base64.strict_decode64(sign), string)
+        match = rsa.verify('sha256', Base64.strict_decode64(sign), string)
+        OpenSSL.errors.clear
+        match
       end
     end
   end
